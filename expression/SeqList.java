@@ -25,10 +25,58 @@ public class SeqList<String> extends Object {
 		return this.n;
 	}
 	public String get(int i){										//获取第i个元素，若下标越界，返回null
-		if(i>=00&&i<this.n){
+		if(i>=00 && i<this.n){
 			return (String)this.element[i];
 		}
 		return null;
+	}
+	public void set(int i,String x){ 								//置值
+		if(x==null){
+			throw new NullPointerException("x==null");    			//抛出空对象异常
+		}
+		if(i>=0 && i<this.n){
+			this.element[i]=x;
+		}
+		else{
+			throw new java.lang.IndexOutOfBoundsException(i+"");	//抛出越界异常
+		}
+	}
+	public java.lang.String toString(){								//重载toString方法
+		java.lang.String str="(";
+		if(this.n>0){
+			str+=this.element[0].toString();
+		}
+		for(int i=1;i<this.n;i++){
+			str+=","+this.element[i].toString();
+		}
+		return str+")";
+	}
+	public int insert(int i,String x){
+		if(x==null){
+			throw new NullPointerException("x==null");
+		}
+		if(i<0){
+			i=0;
+		}
+		if(i>this.n){
+			i=this.n;
+		}
+		Object[] source=this.element;								//数组引用赋值
+		if(this.n==element.length){									//若数组满，扩充顺序表的数组容量
+			this.element=new Object[source.length*2];
+			for(int j=0;j<i;j++){
+				this.element[j]=source[j];
+			}
+		}
+		for(int j=this.n-1;j>=i;j--){
+			this.element[j+1]=source[j];
+		}
+		this.element[i]=x;
+		this.n++;
+		return i;
+	}
+	public int insert(String x){
+		return this.insert(this.n, x);
 	}
 	
 }
