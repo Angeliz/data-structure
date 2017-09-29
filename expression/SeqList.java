@@ -68,7 +68,7 @@ public class SeqList<String> extends Object {
 				this.element[j]=source[j];
 			}
 		}
-		for(int j=this.n-1;j>=i;j--){
+		for(int j=this.n-1;j>=i;j--){   							//向后移动
 			this.element[j+1]=source[j];
 		}
 		this.element[i]=x;
@@ -78,5 +78,16 @@ public class SeqList<String> extends Object {
 	public int insert(String x){
 		return this.insert(this.n, x);
 	}
-	
+	public String remove(int i){									//删除
+		if(this.n>0&&i>=0&&i<this.n){
+			String old=(String)this.element[i];						//old中存储被删元素
+			for(int j=i;j<this.n-1;j++){
+				this.element[j]=this.element[j+1];
+			}
+			this.element[this.n-1]=null;							//设置原数组对象为空，释放原引用实例
+			this.n--;
+			return old;												//返回old局部变量引用的对象，传递引用对象
+		}
+		return null;
+	}
 }
