@@ -51,12 +51,41 @@ public class Expression {
 		return postfix;
 	}
 	
-	public static int toValue(StringBuffer postfix){
-		Stack<Integer> stack=new LinkedStack<Integer>();
+	public static int toValue(StringBuffer postfix){								//计算后缀表达式的值
+		Stack<Integer> stack=new LinkedStack<Integer>();							//操作数栈，链式栈
+		int value=0;
+		for(int i=0;i<postfix.length();i++){										//遍历后缀表达式中的字符
+			char ch=postfix.charAt(i);
+			if(ch>='0' && ch<='9'){													//遇到数字字符
+				value=0;
+				while(ch!=' '){														//将整数字符串转换为整数值
+					value=value*10+ch-'0';
+					ch=postfix.charAt(++i);
+				}
+				stack.push(value);													//整数对象入栈
+			}
+			else{
+				if(ch!=' '){
+					int y=stack.pop();												//出栈两个操作符，注意出栈次序
+					int x=stack.pop();
+					switch(ch){
+						case'+': value=x+y; break;
+						case'-': value=x-y; break;
+						case'*': value=x*y; break;
+						case'/': value=x/y; break;
+					}
+					System.out.print(x+(ch+"")+y+"="+value+",");					//显示运算过程
+					stack.push(value);												//运算结果入栈
+				}
+			}
+		}
+		return stack.pop();
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		String infix="123+10*(45-50+20)/((35-25)*2+10)-11";
+		StringBuffer postfix=toPostfix(infix);
+		System.out.println("\ninfix="+infix+"\npostfix="+postfix+"\nvalue="+toValue(postfix));
 	}
 
 }

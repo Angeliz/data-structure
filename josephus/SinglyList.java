@@ -15,6 +15,9 @@ public class SinglyList<String> extends Object{
 		this.head=new SinglyList<String> (null,null);		      			//创造头结点，data和next的值均为null	
 	}
 	
+	public boolean isEmpty(){
+		return this.head.next==null;
+	}
 	//取出元素
 	public String get(int i){					  							//返回第i个元素，若i越界，则返回null
 		SinglyList<String> p=this.head.next;	  
