@@ -6,20 +6,71 @@ public class BinaryTree {
 	public BinaryTree(){
 		this.root=null;
 	}
+	//构造二叉树，prelist数组指定二叉树标明空子树的先根遍历序列
+	public BinaryTree(String[] prelist){
+		this.root=create(prelist);
+	}
+	private int i=0;
+	private BinaryNode<String> create(String[] prelist) {
+		// TODO Auto-generated method stub
+		BinaryNode<String> p=null;
+		if(i<prelist.length){
+			String elem=prelist[i];
+			i++;
+			if(elem!=null){
+				p=new BinaryNode<String>(elem);
+				p.left=create(prelist);
+				p.right=create(prelist);
+			}
+		}
+		return null;
+	}
 	public boolean isEmpty(){
 		return this.root==null;
 	}
-	//插入x作为根结点，原根结点为x的左孩子；返回插入结点
 	public BinaryNode<String> insert(String x){
 		return this.root=new BinaryNode<String>(x,this.root,null);
 	}
-	//插入x为parent结点的左/右孩子，leftChild指定孩子，取值为true（左）、false（右）
-	//parent的原左右孩子成为x结点的左右孩子；返回插入结点
-	//若x==null，不插入，返回null；若parent==null，Java抛出空对象异常
-	
+	//层次遍历
+	public void levelorder(){	
+		System.out.println("层次遍历：");
+		LinkedQueue que=new LinkedQueue();			//创建空队列
+		BinaryNode<String> p=this.root;
+		while(p!=null){
+			System.out.println(p.data+"");
+			if(p.left!=null){
+				que.add(p.left);
+			}
+			if(p.right!=null){
+				que.add(p.right);
+			}
+			p=que.poll();		
+		}
+		System.out.println();
+	}
+	//中根遍历
+	public void inorderTraverse(){
+		System.out.println("中根遍历：");
+		LinkedStack stack=new LinkedStack();			//创建空队列
+		BinaryNode<String> p=this.root;
+		while(p!=null||!stack.isEmpty()){
+			if(p!=null){
+				stack.push(p);
+				p=p.left;
+			}
+			else{
+				System.out.println(stack.pop());
+				p=stack.pop();
+				p=p.right;
+			}
+		}
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		String[] prelist={"A","B","D",null,"G",null,null,null,"C","E",null,null,"F","H"};
+		BinaryTree bitree=new BinaryTree(prelist);
+		bitree.inorderTraverse();
+		bitree.levelorder();
 	}
 
 }
