@@ -23,8 +23,9 @@ public class BinaryTree {
 				p.right=create(prelist);
 			}
 		}
-		return null;
+		return p;
 	}
+	
 	public boolean isEmpty(){
 		return this.root==null;
 	}
@@ -33,11 +34,11 @@ public class BinaryTree {
 	}
 	//层次遍历
 	public void levelorder(){	
-		System.out.println("层次遍历：");
+		System.out.print("层次遍历：");
 		LinkedQueue que=new LinkedQueue();			//创建空队列
 		BinaryNode<String> p=this.root;
 		while(p!=null){
-			System.out.println(p.data+"");
+			System.out.print(p.data+" ");
 			if(p.left!=null){
 				que.add(p.left);
 			}
@@ -50,7 +51,7 @@ public class BinaryTree {
 	}
 	//中根遍历
 	public void inorderTraverse(){
-		System.out.println("中根遍历：");
+		System.out.print("中根遍历：");
 		LinkedStack stack=new LinkedStack();			//创建空队列
 		BinaryNode<String> p=this.root;
 		while(p!=null||!stack.isEmpty()){
@@ -59,8 +60,9 @@ public class BinaryTree {
 				p=p.left;
 			}
 			else{
-				System.out.println(stack.pop());
 				p=stack.pop();
+				System.out.print(p+" ");
+				
 				p=p.right;
 			}
 		}
@@ -69,8 +71,10 @@ public class BinaryTree {
 		// TODO Auto-generated method stub
 		String[] prelist={"A","B","D",null,"G",null,null,null,"C","E",null,null,"F","H"};
 		BinaryTree bitree=new BinaryTree(prelist);
-		bitree.inorderTraverse();
+//		System.out.println(bitree.root);
 		bitree.levelorder();
+		bitree.inorderTraverse();
+		
 	}
 
 }
