@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>排序算法动态演示</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		ul{
+			list-style-type: none;
+			
+		}
+		li{
+			background-color: black;
+			width: 5px;
+			margin:0 2px;
+			display: inline-block;
+		}
+
+	</style>
+</head>
+<body>
+	<ul>
+		<li ></li>
+		<li ></li>
+		<li ></li>
+		<li ></li>
+		<li ></li>
+		<li ></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<button id="quickBtn">快速排序</button>
+	<script type="text/javascript">
+		// 初始化序列
+		var value=[24,16,10,36,28,15,13,30,19,24];
+		var list=document.getElementsByTagName("li");
+		for(var i=0;i<list.length;i++){
+			list[i].style.height=value[i]+"px";
+		}
+		//全局对象
+		var reArr=[];
+		var timer=null;
+		//快速排序算法
+		function quickSort(keys,begin,end){
+    		if(begin>=0&&begin<keys.length&&end>=0&&end<keys.length&&begin<end){		//序列有效
+    			var i=begin;
+    			var j=end;
+    			var vot=keys[i];
+    			while(i!=j){
+    				while(i<j&&keys[j]>=vot){
+    					j--;
+    				}
+    				if(i<j){
+    					keys[i]=keys[j];
+    					i++;
+    				}
+    				while(i<j&&keys[i]<=vot){
+    					i++;
+    				}
+    				if(i<j){
+    					keys[j]=keys[i];
+    					j--;
+    				}
+    				reArr.push(keys); 	
+    			}
+    			keys[i]=vot;
+    			quickSort(keys,begin,j-1);
+    			quickSort(keys,i+1,end);
+    			
+    		}
+    	}
+    	function quickSortResult(keys){
+    		quickSort(keys,0,keys.length-1);
+    		console.log(keys);
+    		console.log(reArr);
+    		// for(var i=0;i<lis.length;i++){
+	    	// 	lis[i].innerText=keys[i];
+	    	// 	lis[i].style.height=keys[i]+"px";
+	    	// }
+	    	var i=-1;
+	    	timer = setInterval(function(){
+	    		i++;
+	    		if(i<reArr.length){
+	    			for(var j=0;j<reArr[i].length;j++){
+	    				list[j].style.height=reArr[i][j]+"px";
+	    			}
+	    		}
+	    		else{
+	    			clearInterval(timer);
+	    		}
+	    	},700)
+    	}	
+    	var quickBtn=document.getElementById("quickBtn");
+    	quickBtn.onclick=function(){
+    		quickSortResult(value);
+    	}
+	</script>
+</body>
+
+</html>
